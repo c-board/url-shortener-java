@@ -32,20 +32,19 @@ export function ShortenForm({
 
       setIsLoading(true);
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/shorten`,
-        {
-          longUrl: sanitizedUrl,
-        },
+        `http://localhost:8080/api/shorten`,
+        sanitizedUrl,
         {
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "text/plain",
+          }
         }
       );
-      setShortUrl(response.data.shortUrl);
+      setShortUrl(response.data);
       setError("");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
+        console.error("Error details:", err.response);
         if (err.response?.status === 429) {
           setError("Too many requests. Please try again later.");
         } else {

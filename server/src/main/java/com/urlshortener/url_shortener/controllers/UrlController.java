@@ -6,16 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 public class UrlController {
 
     @Autowired
     private UrlService urlService;
 
-    @PostMapping("/shorten")
-    public ResponseEntity<?> shortenUrl(@RequestBody String longUrl) {
-        String shortId = urlService.shortenUrl(longUrl);
-        return ResponseEntity.ok("http://localhost:8080/" + shortId);
+    @PostMapping(value = "/api/shorten", consumes = "text/plain")
+    public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
+        try {
+            String shortId = urlService.shortenUrl(longUrl);
+            return ResponseEntity.ok("http://localhost:8080/" + shortId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error processing URL");
+        }
     }
 
     @GetMapping("/{shortId}")
