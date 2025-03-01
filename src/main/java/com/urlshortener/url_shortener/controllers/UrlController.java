@@ -2,6 +2,7 @@ package com.urlshortener.url_shortener.controllers;
 
 import com.urlshortener.url_shortener.services.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +13,14 @@ public class UrlController {
     @Autowired
     private UrlService urlService;
 
+    @Value("${app.base-url}")
+    private String baseUrl;
+
     @PostMapping(value = "/api/shorten", consumes = "text/plain")
     public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
         try {
             String shortId = urlService.shortenUrl(longUrl);
-            return ResponseEntity.ok("http://localhost:8080/" + shortId);
+            return ResponseEntity.ok(baseUrl + "/" + shortId);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error processing URL");
         }
