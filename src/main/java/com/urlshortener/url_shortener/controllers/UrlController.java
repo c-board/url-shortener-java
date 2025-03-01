@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = { "http://localhost:5173",
+        "https://url-shortener-fe-production-b9a2.up.railway.app/" }, allowCredentials = "true")
 public class UrlController {
 
     @Autowired
@@ -34,4 +36,4 @@ public class UrlController {
             return ResponseEntity.status(404).body("URL not found");
         }
     }
-} 
+}
