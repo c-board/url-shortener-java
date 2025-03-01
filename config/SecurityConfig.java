@@ -37,7 +37,8 @@ public class SecurityConfig {
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
                 "https://url-shortener-fe-production.up.railway.app",
-                "https://url-shortener-fe-production-b9a2.up.railway.app"));
+                "https://url-shortener-fe-production-b9a2.up.railway.app",
+                "https://java-server-production-8663.up.railway.app"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
